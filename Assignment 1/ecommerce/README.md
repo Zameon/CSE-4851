@@ -1,18 +1,95 @@
-## Getting Started
+# E-commerce Order Processing System
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+A sample Java-based e-commerce application demonstrating four classic design patterns—Factory, Strategy, Decorator, and Template Method—to achieve modular, extensible, and maintainable code.
 
-## Folder Structure
+---
 
-The workspace contains two folders by default, where:
+## Table of Contents
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+1. [Overview](#overview)
+2. [Design Patterns](#design-patterns)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+   * [Factory Pattern](#factory-pattern)
+   * [Strategy Pattern](#strategy-pattern)
+   * [Decorator Pattern](#decorator-pattern)
+   * [Template Method Pattern](#template-method-pattern)
+3. [Package Structure](#package-structure)
+---
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Overview
 
-## Dependency Management
+This project simulates order processing in an online store. We apply:
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+* **Factory Pattern** to create product objects by type (e.g., Book, Electronics).
+* **Strategy Pattern** to encapsulate payment algorithms (CreditCard, PayPal).
+* **Decorator Pattern** to add cross-cutting concerns (logging, notifications) to the core order service.
+* **Template Method Pattern** to define a reusable skeleton for processing different order types (standard, preorder).
+
+---
+
+## Design Patterns
+
+### Factory Pattern
+
+**Component**: `ProductFactory`
+**Responsibility**: Instantiate concrete `Product` subclasses (`Book`, `Electronics`) based on a type string.
+
+### Strategy Pattern
+
+**Component**: `PaymentStrategy` interface
+**Responsibility**: Encapsulate payment algorithms. Implementations include:
+
+* `CreditCardStrategy`
+* `PayPalStrategy`
+
+### Decorator Pattern
+
+**Component**: `OrderServiceDecorator` (abstract)
+**Responsibility**: Wrap an `OrderService` to add behaviors. Concrete decorators:
+
+* `LoggingDecorator` — logs around order placement
+* `NotificationDecorator` — sends a notification after placement
+
+### Template Method Pattern
+
+**Component**: `OrderProcessor` (abstract)
+**Responsibility**: Define the steps of `processOrder()`—validate, place payment, ship—and allow subclasses to override hooks. Concrete processors:
+
+* `StandardOrderProcessor`
+* `PreorderProcessor`
+
+---
+
+## Package Structure
+
+```
+src/
+├── App.java
+├── factory/
+│   └── ProductFactory.java
+├── model/
+│   ├── Order.java
+│   └── Product.java
+├── model/products/
+│   ├── Book.java
+│   └── Electronics.java
+├── strategy/
+│   ├── PaymentStrategy.java
+│   ├── CreditCardStrategy.java
+│   └── BkashStrategy.java
+├── service/
+│   ├── OrderService.java
+│   ├── BasicOrderService.java
+│   └── decorator/
+│       ├── OrderServiceDecorator.java
+│       ├── LoggingDecorator.java
+│       └── EmailNotifDecorator.java
+└── template/
+    ├── OrderProcessor.java
+    ├── StandardProcessor.java
+    └── PreorderProcessor.java
+```
+
+---
+
+
